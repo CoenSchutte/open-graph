@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
 
 class GenerateImageController extends Controller
@@ -25,16 +26,19 @@ class GenerateImageController extends Controller
             ],
         ];
 
-        if (! file_exists(public_path('screenshots/' . $platform . '/' . $url . '.png'))) {
+        // If file exists in S3
+        if (! Storage::disk('s3')->exists($platform . '/' . $url . '.png')) {
             $decoded_url = base64_decode($url);
 
-            Browsershot::url($decoded_url)
+            $image = Browsershot::url($decoded_url)
                 ->windowSize($preferred_size[$platform]['width'], $preferred_size[$platform]['height'])
-                ->save('screenshots/' . $platform . '/' . $url . '.png');
+                ->screenshot();
+
+            Storage::disk('s3')->put($platform . '/' . $url . '.png', $image);
         }
 
         // Get the contents of the screenshot
-        $contents = file_get_contents(asset('screenshots/' . $platform . '/' . $url . '.png'));
+        $contents = Storage::disk('s3')->get($platform . '/' . $url . '.png');
 
         // Return the image
         return response($contents, 200)->header('Content-Type', 'image/png');
