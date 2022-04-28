@@ -12,7 +12,7 @@ class IndexController extends Controller
         $request_url = $request['url'];
         !str_contains($request_url, 'https') ? $request_url = 'https://' . $request_url : $request_url = $request_url;
         $url = base64_encode($request_url);
-        $image = (new GenerateImageController())->__invoke($request['platform'], $url);
+        $image = (new GenerateImageController())->__invoke('twitter', $url);
 
         $other =
             '<!-- Other Meta Tags -->
@@ -22,22 +22,16 @@ class IndexController extends Controller
 <meta property="og:description" content="<Description>">
 <meta property="og:image" content="' . config('opengraph.app_url') . 'facebook/' . $url . '">';
 
-
-        $twitter = null;
-
-        if ($request['platform'] == 'twitter' || $request['platform'] == 'all') {
-
-            $twitter =
-                '<!-- Twitter Meta Tags -->
+        $twitter =
+            '<!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary">
 <meta property="twitter:domain" content="' . $request_url . '">
 <meta property="twitter:url" content="' . $request_url . '">
 <meta name="twitter:title" content="<Title>">
 <meta name="twitter:description" content="<Description>">
-<meta name="twitter:image" content="'. config('opengraph.app_url') . 'twitter/' . $url . '">
+<meta name="twitter:image" content="' . config('opengraph.app_url') . 'twitter/' . $url . '">
 
 ';
-        }
         $html = Shiki::highlight(
             code: $twitter . $other,
             language: 'html',
