@@ -4,4 +4,6 @@
 
 pre {
     padding: 1rem !important;
+    overflow-x: scroll;
+    border-radius: 0.5rem;
 }

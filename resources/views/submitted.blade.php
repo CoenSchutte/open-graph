@@ -1,14 +1,12 @@
-<html>
-<head>
-    <title>Homepage</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
+@extends('layouts.app')
 
-<body>
-<div class="container">
-    <div class="row">
-        {!!$html!!}
+@section('content')
+    <div class="flex h-full max-w-full">
+        <div class="m-auto sd:max-w-prose max-w-full">
+            <p class="leading-normal text-base md:text-2xl mb-8 text-center">
+                No setup required. Just copy-paste the code and you're done!
+            </p>
+            {!!$html!!}
+        </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

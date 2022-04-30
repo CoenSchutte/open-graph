@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-screen">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -8,7 +8,7 @@
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
 
     <style>
@@ -22,7 +22,7 @@
 
 <body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed"
       style="background-image: url({{asset('img/header.png')}});">
-<div class="h-full">
+<div class="md:h-full h-92">
     <!--Nav-->
     <div class="w-full container mx-auto">
         <div class="w-full flex items-center justify-between">
